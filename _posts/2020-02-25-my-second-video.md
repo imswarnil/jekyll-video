@@ -4,6 +4,7 @@ title: "Understanding React Hooks: useState and useEffect Explained"
 date: 2023-05-01 14:30:00 +0700
 tags: [React, Hooks, JavaScript, Frontend]
 description: "A clear explanation of the fundamental React Hooks, useState and useEffect, with practical examples for beginners."
+image : /assets/img/ogp.png
 video_type: youtube
 video_id: "1_IYL9ZMR_Y" # Example YouTube ID
 duration: "18:45"
