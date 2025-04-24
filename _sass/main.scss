@@ -595,3 +595,81 @@ p:last-child {
 .video-footer__theme-attribution a:hover {
   color: var(--video-primary);
 }
+
+/* ============================================ */
+/*     CSS Additions for Archive Page          */
+/* ============================================ */
+
+.video-search-box {
+  position: relative; /* For positioning the icon */
+  max-width: 600px; /* Limit search width */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.video-search-box__label {
+  position: absolute;
+  left: var(--video-space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* Don't block input */
+  color: var(--video-muted-foreground);
+}
+
+.video-search-box__icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.video-search-box__input { /* Reuses .video-search-input base styles */
+  padding-left: calc(var(--video-space-3) + 1.25rem + var(--video-space-2)); /* space for icon */
+  width: 100%;
+  font-size: var(--video-text-base); /* Make it slightly larger */
+}
+
+/* Style search results - assuming SimpleJekyllSearch adds list items */
+#search-results {
+  list-style: none;
+  padding: 0;
+  margin-top: var(--video-space-6);
+  /* Optionally use the grid for results too */
+  /* display: grid; */
+  /* grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); */
+  /* gap: var(--video-space-6); */
+}
+#search-results li {
+  margin-bottom: var(--video-space-4); /* Simple list spacing */
+}
+#search-results li a {
+  font-weight: var(--video-font-weight-medium);
+  text-decoration: none;
+}
+#search-results li a:hover {
+  text-decoration: underline;
+  color: var(--video-primary);
+}
+#search-results li p { /* Style excerpt if shown */
+  font-size: var(--video-text-sm);
+  color: var(--video-muted-foreground);
+  margin-top: var(--video-space-1);
+  margin-bottom: 0;
+}
+
+
+.video-archive__year-heading {
+  font-size: var(--video-text-2xl);
+  font-weight: var(--video-font-weight-bold);
+  margin-top: var(--video-space-12); /* More space before year */
+  margin-bottom: var(--video-space-6);
+  padding-bottom: var(--video-space-2);
+  border-bottom: 1px solid var(--video-border);
+}
+/* Less top margin for the very first year heading */
+.video-archive__year-heading:first-of-type {
+   margin-top: var(--video-space-8);
+}
+
+/* Ensure grid within year sections has appropriate margin */
+.video-archive__grid {
+   margin-bottom: var(--video-space-12);
+}

@@ -1,29 +1,77 @@
 ---
-title: Archive
+layout: default
+title: Video Archive
 permalink: /archive/
-layout: page
-excerpt: All post.
+excerpt: Browse all videos by year. Find specific content using the search bar.
 comments: false
 ---
 
-<div class="search-article">
-  <label for="search-input" aria-hidden="true">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(128,128,128,0.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-  </label>
-  <input type="search" id="search-input" placeholder="Find some articles here" aria-label="Search">
+<div class="video-container video-py-8">
+
+    <h1 class="video-page-title video-text-center">Video Archive</h1>
+
+    <div role="search" class="video-search-box video-mb-12">
+        <label for="search-input" class="video-search-box__label" aria-hidden="true">
+            <svg class="video-search-box__icon video-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </label>
+        <input type="search" id="search-input" class="video-search-box__input" placeholder="Find videos..." aria-label="Search videos">
+    </div>
+
+    <ul id="search-results"></ul>
+
+    <div id="archive-list">
+        {% assign posts_by_year = site.posts | group_by_exp:"post", "post.date | date: '%Y'" | sort: "name" | reverse %}
+        {% for year_group in posts_by_year %}
+            <h2 class="video-archive__year-heading">{{ year_group.name }}</h2>
+            <div class="video-video-grid video-archive__grid">
+                {% for post in year_group.items %}
+                    {% include video-card.html video=post %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+
 </div>
 
-<ul id="search-results"></ul>
+{# Important: Ensure the search script is included in your default layout or here if specific to this page #}
+{# This relies on Simple-Jekyll-Search being set up #}
+<script src="{{ '/assets/js/simple-jekyll-search.min.js' | relative_url }}" defer="defer"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Hide archive list initially if search is active
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+    const archiveList = document.getElementById('archive-list');
 
-{%- for post in site.posts -%}
-  {%- capture current_year -%}{{ post.date | date: "%Y" }}{%- endcapture -%}
-  {%- unless current_year == previous_year -%}
-    <h2>{{ current_year }}</h2>
-    {%- assign previous_year = current_year -%}
-  {%- endunless -%}
-  <article class="post-item">
-    <h3 class="post-item-title">
-      <a href="{{ post.url }}">{{ post.title | escape }}</a>
-    </h3> 
-  </article>
-{%- endfor -%}
+    if (searchInput && searchResults && archiveList) {
+        SimpleJekyllSearch({
+          searchInput: searchInput,
+          resultsContainer: searchResults,
+          json: '{{ "/assets/search.json" | relative_url }}', // Adjust path if needed
+          searchResultTemplate: '<li><a href="{url}">{title}</a><p>{excerpt}</p></li>', // Customize template
+          noResultsText: '<li>No results found</li>',
+           limit: 10,
+           fuzzy: false,
+           onSearchComplete: function(results){
+              // Hide the main list when there are search results or input has value
+              if(searchInput.value.length > 0){
+                  archiveList.style.display = 'none';
+              } else {
+                  archiveList.style.display = 'block';
+              }
+           }
+        });
+
+        searchInput.addEventListener('input', function() {
+            if(searchInput.value.length > 0){
+                archiveList.style.display = 'none';
+                searchResults.style.display = 'block'; // Ensure results are visible
+            } else {
+                archiveList.style.display = 'block';
+                searchResults.innerHTML = ''; // Clear results
+                searchResults.style.display = 'none';
+            }
+        });
+    }
+  });
+</script>
