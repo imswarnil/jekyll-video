@@ -438,6 +438,15 @@ p:last-child {
 }
 .video-player-placeholder p { color: white; font-size: var(--video-text-lg); margin: 0; }
 
+.video-player-placeholder iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0; /* Ensure no iframe border */
+}
+
 .video-info-section { margin-bottom: var(--video-space-8); }
 .video-info-section__title { font-size: var(--video-text-2xl); font-weight: var(--video-font-weight-bold); margin-bottom: var(--video-space-2); }
 .video-info-section__meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--video-space-2) var(--video-space-4); /* row col */ font-size: var(--video-text-sm); color: var(--video-muted-foreground); margin-bottom: var(--video-space-4); }
@@ -472,9 +481,26 @@ p:last-child {
 /* --- Sidebar Column (Video Detail) --- */
 .video-detail-sidebar > * { margin-bottom: var(--video-space-6); } /* Space between sidebar blocks */
 .video-detail-sidebar > *:last-child { margin-bottom: 0; }
+.video-detail-sidebar > .video-sidebar-sticky-wrapper {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: calc(var(--video-space-3) + var(--video-space-3) + 1px + var(--video-space-8)); /* header padding + border + gap */
+}
 
-.video-timestamps-box { border: 1px solid var(--video-border); border-radius: var(--video-radius-lg); padding: var(--video-space-4); position: sticky; top: calc(var(--video-space-3) * 2 + var(--video-space-4)); /* Approx header height + gap */ }
-.video-timestamps-box h2 { font-weight: var(--video-font-weight-bold); margin-bottom: var(--video-space-4); font-size: var(--video-text-lg); }
+/* Add some spacing between items in the sticky wrapper */
+.video-sidebar-sticky-wrapper > * {
+  margin-bottom: var(--video-space-6);
+}
+.video-sidebar-sticky-wrapper > *:last-child {
+ margin-bottom: 0;
+}
+
+
+.video-timestamps-box {
+  border: 1px solid var(--video-border);
+  border-radius: var(--video-radius-lg);
+  padding: var(--video-space-4);
+}.video-timestamps-box h2 { font-weight: var(--video-font-weight-bold); margin-bottom: var(--video-space-4); font-size: var(--video-text-lg); }
 .video-timestamp-list { display: flex; flex-direction: column; gap: var(--video-space-2); }
 .video-timestamp-item button { width: 100%; text-align: left; padding: var(--video-space-2) var(--video-space-3); border-radius: var(--video-radius); display: flex; align-items: center; gap: var(--video-space-2); transition: background-color 150ms ease, color 150ms ease; }
 .video-timestamp-item button:hover { background-color: var(--video-muted); text-decoration: none; }
