@@ -1,0 +1,826 @@
+// _scss/theme/_video.scss
+
+// --- Homepage Specific Sections ---
+.video-hero-section {
+    margin-bottom: $video-spacing-12;
+  
+    &__content {
+      display: flex;
+      flex-direction: column;
+      align-items: center; // Center vertically on mobile
+      gap: $video-spacing-8;
+  
+      @include video-respond-above($video-breakpoint-md) {
+        flex-direction: row; // md:flex-row
+        align-items: center; // Align items properly on larger screens
+      }
+    }
+  
+    &__text {
+      flex: 1;
+  
+      h1 {
+        font-size: 2.25rem; // text-4xl
+        font-weight: $video-bold-font-weight;
+        margin-bottom: $video-spacing-4;
+      }
+  
+      p {
+        font-size: 1.125rem; // text-lg
+        color: $video-color-muted-foreground;
+        margin-bottom: $video-spacing-6;
+      }
+    }
+  
+     &__actions {
+        display: flex;
+        gap: $video-spacing-4;
+      }
+  
+    &__media {
+      flex: 1;
+      width: 100%; // Ensure it takes space on mobile
+    }
+  
+    &__banner-wrapper {
+      position: relative;
+      aspect-ratio: 16 / 9; // aspect-video
+      border-radius: $video-border-radius-xl;
+      overflow: hidden;
+      border: $video-border-width $video-border-style $video-color-border;
+      box-shadow: $video-shadow-lg;
+  
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  
+    &__play-button-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    &__play-button {
+      background-color: rgba($video-color-primary, 0.9); // bg-primary/90
+      border-radius: $video-border-radius-full;
+      padding: $video-spacing-4; // p-4
+      color: $video-color-primary-foreground; // icon color
+  
+      .video-icon { // Play icon
+        width: $video-spacing-8; // w-8
+        height: $video-spacing-8; // h-8
+      }
+    }
+  }
+  
+  .video-section {
+    margin-bottom: $video-spacing-12;
+  
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: $video-spacing-6;
+    }
+  
+    &__title {
+      font-size: 1.5rem; // text-2xl
+      font-weight: $video-bold-font-weight;
+      display: flex;
+      align-items: center;
+      gap: $video-spacing-2;
+      margin-bottom: 0; // Override default heading margin
+  
+      .video-icon {
+        width: 1.5rem; // w-6
+        height: 1.5rem; // h-6
+        color: $video-color-primary;
+      }
+    }
+  
+    &__view-all-link {
+      color: $video-color-primary;
+      font-weight: 500; // medium
+      display: flex;
+      align-items: center;
+      gap: $video-spacing-1;
+      font-size: 0.875rem; // slightly smaller than default link maybe?
+  
+      .video-icon { // ArrowRight icon
+         width: 1rem; // w-4
+         height: 1rem; // h-4
+      }
+  
+      &:hover {
+          text-decoration: underline;
+      }
+    }
+  
+    &__grid {
+      display: grid;
+      gap: $video-spacing-6;
+      grid-template-columns: 1fr; // 1 column default
+  
+      &--videos { // Grid for video cards
+          @include video-respond-above($video-breakpoint-sm) {
+              grid-template-columns: repeat(2, 1fr); // sm:grid-cols-2
+          }
+          @include video-respond-above($video-breakpoint-lg) {
+              grid-template-columns: repeat(3, 1fr); // lg:grid-cols-3
+          }
+          @include video-respond-above($video-breakpoint-xl) {
+              grid-template-columns: repeat(4, 1fr); // xl:grid-cols-4
+          }
+      }
+  
+       &--series { // Grid for series cards
+          @include video-respond-above($video-breakpoint-md) {
+              grid-template-columns: repeat(2, 1fr); // md:grid-cols-2
+          }
+           @include video-respond-above($video-breakpoint-lg) {
+              grid-template-columns: repeat(3, 1fr); // lg:grid-cols-3
+          }
+      }
+    }
+  }
+  
+  // --- Video Card Component ---
+  .video-card {
+    display: block; // Make the link a block element
+    color: inherit; // Inherit text color
+    text-decoration: none; // Remove default link underline
+  
+    &:hover {
+      text-decoration: none; // Ensure no underline on hover
+    }
+  
+    &__inner { // The article element
+      border: $video-border-width $video-border-style $video-color-border;
+      border-radius: $video-border-radius-xl;
+      overflow: hidden;
+      box-shadow: $video-shadow-sm;
+      transition: box-shadow $video-transition-duration $video-transition-timing;
+    }
+  
+    &__thumbnail-wrapper {
+      position: relative;
+      aspect-ratio: 16 / 9; // aspect-video
+      overflow: hidden; // Ensure scaled image doesn't overflow card rounding
+    }
+  
+    &__thumbnail { // The img element
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      transition: transform $video-transition-duration * 1.5 $video-transition-timing; // Slower transform
+    }
+  
+    &__duration {
+      position: absolute;
+      bottom: $video-spacing-2;
+      right: $video-spacing-2;
+      background-color: $video-color-black-transparent; // bg-black/80
+      color: $video-color-primary-foreground; // text-white
+      font-size: 0.75rem; // text-xs
+      padding: $video-spacing-1 $video-spacing-2; // px-2 py-1
+      border-radius: $video-border-radius;
+      line-height: 1.2;
+    }
+  
+    &__trending-badge {
+      position: absolute;
+      top: $video-spacing-2;
+      left: $video-spacing-2;
+      background-color: $video-color-primary;
+      color: $video-color-primary-foreground;
+      font-size: 0.75rem; // text-xs
+      padding: $video-spacing-1 $video-spacing-2; // px-2 py-1
+      border-radius: $video-border-radius-full;
+      display: flex;
+      align-items: center;
+      gap: $video-spacing-1;
+      line-height: 1.2;
+  
+      .video-icon { // Fire icon
+         width: 0.75rem; // w-3
+         height: 0.75rem; // h-3
+      }
+    }
+  
+    &__content {
+      padding: $video-spacing-4;
+    }
+  
+    &__title {
+      font-weight: 500; // medium
+      margin-bottom: $video-spacing-2;
+      line-height: 1.4;
+      // Line Clamp (requires vendor prefixes potentially)
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      // Fallback for non-webkit
+      max-height: 2.8em; // line-height * 2
+      transition: color $video-transition-duration $video-transition-timing;
+    }
+  
+    &__meta {
+      display: flex;
+      align-items: center;
+      font-size: 0.875rem; // text-sm
+      color: $video-color-muted-foreground;
+  
+      span + span { // Add separator only between spans
+          margin-left: $video-spacing-2;
+          &:before {
+            content: '•';
+            margin-right: $video-spacing-2;
+          }
+      }
+    }
+  
+    // Hover effects (applied to the 'a' tag with .video-card class)
+    &:hover &__inner {
+      box-shadow: $video-shadow-md;
+    }
+    &:hover &__thumbnail {
+      transform: scale(1.05);
+    }
+    &:hover &__title {
+      color: $video-color-primary;
+    }
+  }
+  
+  // --- Series Card Component ---
+  .video-series-card {
+    border: $video-border-width $video-border-style $video-color-border;
+    border-radius: $video-border-radius-xl;
+    overflow: hidden;
+    box-shadow: $video-shadow-sm;
+    transition: box-shadow $video-transition-duration $video-transition-timing;
+  
+    &:hover {
+        box-shadow: $video-shadow-md;
+        .video-series-card__link { // Example of targeting child on hover
+          text-decoration: underline;
+        }
+    }
+  
+    &__thumbnail-wrapper {
+      position: relative;
+      aspect-ratio: 16 / 9; // aspect-video
+    }
+  
+    &__thumbnail { // The img element
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+  
+    &__overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      padding: $video-spacing-4;
+      color: $video-color-primary-foreground; // text-white
+    }
+  
+    &__title {
+      font-weight: $video-bold-font-weight;
+      font-size: 1.125rem; // text-lg
+      margin-bottom: $video-spacing-1;
+    }
+  
+    &__count {
+      font-size: 0.875rem; // text-sm
+      color: $video-color-white-transparent; // text-white/80
+    }
+  
+    &__content {
+      padding: $video-spacing-4;
+    }
+  
+    &__description {
+      color: $video-color-muted-foreground;
+      margin-bottom: $video-spacing-4;
+      font-size: 0.875rem; // ~ text-sm
+       // Line clamp if needed
+       overflow: hidden;
+       display: -webkit-box;
+       -webkit-line-clamp: 3; // Example: 3 lines
+       -webkit-box-orient: vertical;
+       text-overflow: ellipsis;
+       max-height: 4.2em; // line-height * 3
+    }
+  
+    &__link {
+      color: $video-color-primary;
+      font-weight: 500; // medium
+      display: inline-flex; // Use inline-flex to align icon
+      align-items: center;
+      gap: $video-spacing-1;
+      font-size: 0.875rem; // Match view all link size
+  
+      .video-icon { // ArrowRight icon
+         width: 1rem; // w-4
+         height: 1rem; // h-4
+      }
+      &:hover { text-decoration: underline; }
+    }
+  }
+  
+  // --- Newsletter Section ---
+  .video-newsletter-section {
+    background-color: $video-color-muted;
+    border-radius: $video-border-radius-xl;
+    padding: $video-spacing-8 * 2; // p-8 based on tailwind, adjust multiplier
+    margin-bottom: $video-spacing-12;
+  
+    &__inner {
+      max-width: 42rem; // max-w-2xl
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+  
+    &__title {
+      font-size: 1.5rem; // text-2xl
+      font-weight: $video-bold-font-weight;
+      margin-bottom: $video-spacing-4;
+    }
+  
+    &__description {
+      color: $video-color-muted-foreground;
+      margin-bottom: $video-spacing-6;
+    }
+  
+    &__form {
+      display: flex;
+      flex-direction: column; // default column
+      gap: $video-spacing-2;
+  
+      @include video-respond-above($video-breakpoint-sm) {
+        flex-direction: row; // sm:flex-row
+      }
+  
+      input[type="email"] {
+        flex: 1; // flex-1
+         min-width: 0; // Prevent flex item overflow issues
+         text-align: left; // Override center align from parent
+      }
+  
+      button { // Subscribe button
+        // Uses .video-button .video-button--primary by default from base
+      }
+    }
+  }
+  
+  
+  // --- Video Detail Page ---
+  
+  .video-page {
+    &__back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: $video-spacing-1;
+      color: $video-color-primary;
+      margin-bottom: $video-spacing-6;
+      font-size: 0.875rem; // ~ text-sm
+  
+      .video-icon { // ArrowLeft icon
+        width: 1rem; // w-4
+        height: 1rem; // h-4
+      }
+      &:hover { text-decoration: underline; }
+    }
+  
+    &__grid {
+      display: grid;
+      gap: $video-spacing-8;
+      grid-template-columns: 1fr; // 1 column default
+  
+      @include video-respond-above($video-breakpoint-lg) {
+        grid-template-columns: repeat(3, 1fr); // lg:grid-cols-3
+      }
+    }
+  
+    &__main-content {
+      @include video-respond-above($video-breakpoint-lg) {
+        grid-column: span 2 / span 2; // lg:col-span-2
+      }
+    }
+  
+    &__sidebar {
+       @include video-respond-above($video-breakpoint-lg) {
+        grid-column: span 1 / span 1; // lg:col-span-1
+      }
+    }
+  }
+  
+  .video-player-placeholder {
+    position: relative;
+    aspect-ratio: 16 / 9; // aspect-video
+    background-color: #000; // bg-black
+    border-radius: $video-border-radius-xl;
+    overflow: hidden;
+    margin-bottom: $video-spacing-6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff; // text-white
+  
+    p {
+      font-size: 1.125rem; // text-lg
+      margin: 0;
+    }
+  }
+  
+  .video-details {
+    margin-bottom: $video-spacing-8;
+  
+    &__title {
+      font-size: 1.5rem; // text-2xl
+      font-weight: $video-bold-font-weight;
+      margin-bottom: $video-spacing-2;
+      line-height: 1.4;
+    }
+  
+    &__meta {
+      display: flex;
+      flex-wrap: wrap; // flex-wrap
+      align-items: center;
+      gap: $video-spacing-2 $video-spacing-4; // gap-y-2 gap-x-4
+      font-size: 0.875rem; // text-sm
+      color: $video-color-muted-foreground;
+      margin-bottom: $video-spacing-4;
+  
+      div { // Each meta item (likes, views, date, author)
+        display: flex;
+        align-items: center;
+        gap: $video-spacing-1;
+      }
+  
+      .video-icon {
+         width: 1rem; // w-4
+         height: 1rem; // h-4
+      }
+    }
+  
+    &__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $video-spacing-2;
+      margin-bottom: $video-spacing-6;
+  
+      a { // Tag link
+        background-color: $video-color-secondary;
+        color: $video-color-secondary-foreground;
+        font-size: 0.75rem; // text-xs
+        padding: $video-spacing-1 $video-spacing-3; // px-3 py-1
+        border-radius: $video-border-radius-full;
+        line-height: 1.2;
+  
+        &:hover {
+          background-color: darken($video-color-secondary, 5%);
+          text-decoration: none;
+        }
+      }
+    }
+  
+    &__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $video-spacing-3;
+      margin-bottom: $video-spacing-6;
+  
+      button {
+        padding: $video-spacing-2 $video-spacing-4; // px-4 py-2
+        border-radius: $video-border-radius-lg;
+        display: flex;
+        align-items: center;
+        gap: $video-spacing-2;
+        font-size: 0.875rem; // ~ text-sm
+  
+        .video-icon {
+           width: 1rem; // w-4
+           height: 1rem; // h-4
+        }
+  
+        &.video-button--primary { /* Like button styling */ }
+        &.video-button--secondary { /* Share, Save button styling */ }
+      }
+    }
+  
+    &__description-wrapper {
+      border-top: $video-border-width $video-border-style $video-color-border;
+      border-bottom: $video-border-width $video-border-style $video-color-border;
+      padding-top: $video-spacing-6;
+      padding-bottom: $video-spacing-6;
+      margin-bottom: $video-spacing-6;
+  
+      h2 {
+        font-weight: $video-bold-font-weight;
+        margin-bottom: $video-spacing-4;
+        font-size: 1.125rem; // ~ text-lg or keep default h2?
+      }
+  
+      p {
+        white-space: pre-line; // whitespace-pre-line
+        color: $video-color-muted-foreground;
+        font-size: 0.875rem; // ~ text-sm
+        margin-bottom: 0; // No margin on last p in desc
+      }
+    }
+  }
+  
+  .video-ad-placeholder {
+    background-color: $video-color-muted;
+    border: $video-border-width dashed lighten($video-color-muted-foreground, 30%); // border-dashed border-muted-foreground/30
+    border-radius: $video-border-radius-lg;
+    padding: $video-spacing-4;
+    text-align: center;
+    margin-bottom: $video-spacing-6;
+  
+    p {
+      color: $video-color-muted-foreground;
+      font-size: 0.875rem; // ~ text-sm
+      margin: 0;
+    }
+  }
+  
+  .video-comments {
+    border-top: $video-border-width $video-border-style $video-color-border;
+    padding-top: $video-spacing-6;
+  
+    &__title {
+      font-weight: $video-bold-font-weight;
+      margin-bottom: $video-spacing-4;
+      font-size: 1.125rem; // ~ text-lg or h2?
+    }
+  
+    &__add-comment {
+      display: flex;
+      gap: $video-spacing-4;
+      margin-bottom: $video-spacing-6;
+    }
+  
+    &__avatar-placeholder {
+      width: $video-spacing-10; // w-10
+      height: $video-spacing-10; // h-10
+      border-radius: $video-border-radius-full;
+      background-color: $video-color-muted;
+      flex-shrink: 0; // flex-shrink-0
+    }
+  
+    &__input-wrapper {
+      flex: 1; // flex-1
+       min-width: 0;
+    }
+  
+    &__item {
+      display: flex;
+      gap: $video-spacing-4;
+      margin-bottom: $video-spacing-6;
+    }
+  
+    &__content {
+        flex: 1; // Allow content to take remaining space
+         min-width: 0;
+    }
+  
+    &__meta {
+      display: flex;
+      align-items: center;
+      gap: $video-spacing-2;
+      margin-bottom: $video-spacing-1;
+    }
+  
+    &__author {
+      font-weight: 500; // medium
+      font-size: 0.875rem; // ~ text-sm
+    }
+  
+    &__timestamp {
+      font-size: 0.75rem; // text-xs
+      color: $video-color-muted-foreground;
+    }
+  
+    &__text {
+      color: $video-color-muted-foreground;
+      font-size: 0.875rem; // ~ text-sm
+      margin-bottom: 0; // No margin on comment text p
+      line-height: 1.5;
+    }
+  }
+  
+  // --- Sidebar Components (Video Detail Page) ---
+  .video-sidebar-widget {
+    border: $video-border-width $video-border-style $video-color-border;
+    border-radius: $video-border-radius-xl;
+    padding: $video-spacing-4;
+    margin-bottom: $video-spacing-6;
+  
+    &--sticky {
+       // Sticky behavior only on larger screens where sidebar exists
+       @include video-respond-above($video-breakpoint-lg) {
+          position: sticky;
+          top: $video-spacing-4 + 60px; // Adjust top spacing (header height + desired gap)
+       }
+    }
+  
+    &__title {
+      font-weight: $video-bold-font-weight;
+      margin-bottom: $video-spacing-4;
+      font-size: 1rem; // ~ text-base or sm?
+    }
+  
+    ul {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  
+  .video-timestamps { // Extends .video-sidebar-widget
+    ul {
+      gap: $video-spacing-2; // space-y-2
+    }
+  
+    &__item {
+      // li element - no extra styles needed unless alignment issues
+    }
+  
+    &__button {
+      width: 100%;
+      text-align: left;
+      padding: $video-spacing-2 $video-spacing-3; // px-3 py-2
+      border-radius: $video-border-radius-lg;
+      display: flex;
+      align-items: center;
+      gap: $video-spacing-2;
+      font-size: 0.875rem; // ~ text-sm
+      color: $video-color-foreground; // Default text color
+      transition: background-color $video-transition-duration $video-transition-timing, color $video-transition-duration $video-transition-timing;
+      background: none; // Ensure button base styles are overridden
+      border: none; // Ensure button base styles are overridden
+      cursor: pointer;
+  
+      &:hover {
+        background-color: $video-color-muted;
+      }
+  
+      &--active {
+        background-color: rgba($video-color-primary, 0.1); // bg-primary/10
+        color: $video-color-primary;
+        font-weight: 500; // Maybe make active item slightly bolder?
+      }
+    }
+  
+    &__time {
+      font-family: $video-font-mono;
+      font-size: 0.875rem; // text-sm (same as button text)
+      flex-shrink: 0; // Prevent time from shrinking
+    }
+  
+    &__label {
+      flex-grow: 1; // Allow label to take space
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  
+  .video-related-list { // Doesn't use sidebar-widget base styles
+    margin-bottom: $video-spacing-6; // Add margin if not wrapped in widget
+  
+     &__title {
+       font-weight: $video-bold-font-weight;
+       margin-bottom: $video-spacing-4;
+       font-size: 1rem;
+     }
+  
+     &__items {
+        display: flex;
+        flex-direction: column;
+        gap: $video-spacing-4; // space-y-4
+     }
+  
+    &__item { // The 'a' tag link
+      display: flex;
+      gap: $video-spacing-3;
+      color: inherit;
+  
+      &:hover {
+         text-decoration: none;
+         .video-related-list__video-title {
+            color: $video-color-primary;
+         }
+         .video-related-list__thumbnail {
+           transform: scale(1.05);
+         }
+      }
+    }
+  
+    &__thumbnail-wrapper {
+      position: relative;
+      width: 8rem; // w-32
+      aspect-ratio: 16 / 9; // aspect-video
+      border-radius: $video-border-radius-lg;
+      overflow: hidden;
+      flex-shrink: 0; // flex-shrink-0
+    }
+  
+     &__thumbnail { // The img tag
+       object-fit: cover;
+       width: 100%;
+       height: 100%;
+       transition: transform $video-transition-duration * 1.5 $video-transition-timing;
+     }
+  
+     &__duration {
+      position: absolute;
+      bottom: $video-spacing-1;
+      right: $video-spacing-1;
+      background-color: $video-color-black-transparent; // bg-black/80
+      color: $video-color-primary-foreground; // text-white
+      font-size: 0.75rem; // text-xs
+      padding: 0 $video-spacing-1; // px-1 py-0 approx
+      border-radius: $video-border-radius-sm;
+      line-height: 1.2;
+    }
+  
+    &__info {
+      flex: 1;
+       min-width: 0; // Prevent text overflow issues
+    }
+  
+    &__video-title {
+      font-weight: 500; // medium
+      font-size: 0.875rem; // text-sm
+      line-height: 1.4;
+      // Line Clamp
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      max-height: 2.8em; // line-height * 2
+      transition: color $video-transition-duration $video-transition-timing;
+      margin-bottom: $video-spacing-1; // Add small gap before meta
+    }
+  
+    &__meta {
+      display: flex;
+      align-items: center;
+      font-size: 0.75rem; // text-xs
+      color: $video-color-muted-foreground;
+      margin-top: $video-spacing-1; // mt-1
+  
+       span + span { // Add separator only between spans
+          margin-left: $video-spacing-1; // mx-1
+          &:before {
+            content: '•';
+            margin-right: $video-spacing-1; // mx-1
+          }
+      }
+    }
+  }
+  
+  .video-products-list { // Extends .video-sidebar-widget
+     ul {
+       gap: $video-spacing-3; // space-y-3
+     }
+  
+     li a {
+       display: flex;
+       align-items: center;
+       gap: $video-spacing-2;
+       color: $video-color-foreground; // Default link color in this context
+       font-size: 0.875rem; // ~ text-sm
+  
+        &:hover {
+           color: $video-color-primary;
+           text-decoration: none;
+        }
+  
+        .video-icon { // ExternalLink icon
+           width: 1rem; // w-4
+           height: 1rem; // h-4
+           flex-shrink: 0;
+        }
+  
+        span { // Product name
+           white-space: nowrap;
+           overflow: hidden;
+           text-overflow: ellipsis;
+        }
+     }
+  }

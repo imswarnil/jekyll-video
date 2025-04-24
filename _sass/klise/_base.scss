@@ -1,369 +1,281 @@
-// Reset some basic elements
-* {
-  -webkit-transition: background-color 75ms ease-in, border-color 75ms ease-in;
-  -moz-transition: background-color 75ms ease-in, border-color 75ms ease-in;
-  -ms-transition: background-color 75ms ease-in, border-color 75ms ease-in;
-  -o-transition: background-color 75ms ease-in, border-color 75ms ease-in;
-  transition: background-color 75ms ease-in, border-color 75ms ease-in;
+// _scss/theme/_base.scss
+
+// --- Variables ---
+
+// Colors (Light Mode - Default) - Adjust these hex codes to match your desired theme
+$video-color-primary: #ef4444; // Example: Red-ish like YouTube
+$video-color-primary-foreground: #ffffff;
+$video-color-secondary: #f3f4f6; // Example: Light Gray
+$video-color-secondary-foreground: #1f2937; // Dark Gray
+$video-color-background: #ffffff;
+$video-color-foreground: #111827; // Almost Black
+$video-color-muted: #f9fafb; // Very Light Gray
+$video-color-muted-foreground: #6b7280; // Medium Gray
+$video-color-border: #e5e7eb; // Light Gray Border
+$video-color-input: #ffffff;
+$video-color-input-border: #d1d5db;
+$video-color-ring: rgba($video-color-primary, 0.5); // Focus ring
+$video-color-link: $video-color-primary;
+$video-color-link-hover: darken($video-color-primary, 10%);
+$video-color-black-transparent: rgba(0, 0, 0, 0.8);
+$video-color-white-transparent: rgba(255, 255, 255, 0.8);
+
+// Breakpoints (adjust as needed)
+$video-breakpoint-sm: 640px;
+$video-breakpoint-md: 768px;
+$video-breakpoint-lg: 1024px;
+$video-breakpoint-xl: 1280px;
+
+// Spacing (adjust base unit and scale)
+$video-spacing-base: 0.25rem; // 4px if base font size is 16px
+$video-spacing-1: $video-spacing-base * 1;  // 0.25rem / 4px
+$video-spacing-2: $video-spacing-base * 2;  // 0.5rem / 8px
+$video-spacing-3: $video-spacing-base * 3;  // 0.75rem / 12px
+$video-spacing-4: $video-spacing-base * 4;  // 1rem / 16px
+$video-spacing-6: $video-spacing-base * 6;  // 1.5rem / 24px
+$video-spacing-8: $video-spacing-base * 8;  // 2rem / 32px
+$video-spacing-12: $video-spacing-base * 12; // 3rem / 48px
+$video-spacing-16: $video-spacing-base * 16; // 4rem / 64px
+// ... add more as needed
+
+// Borders
+$video-border-radius-sm: 0.125rem; // 2px
+$video-border-radius: 0.25rem;  // 4px
+$video-border-radius-md: 0.375rem; // 6px
+$video-border-radius-lg: 0.5rem;  // 8px
+$video-border-radius-xl: 0.75rem; // 12px
+$video-border-radius-full: 9999px;
+$video-border-width: 1px;
+$video-border-style: solid;
+
+// Shadows
+$video-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$video-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+$video-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+$video-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+
+// Transitions
+$video-transition-duration: 0.2s;
+$video-transition-timing: ease-in-out;
+$video-transition-property-colors: background-color, border-color, color, fill, stroke;
+$video-transition-property-transform: transform;
+$video-transition-property-shadow: box-shadow;
+$video-transition-property-all: all;
+
+
+// --- Mixins ---
+@mixin video-respond-above($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
 }
 
-.notransition {
-  -webkit-transition: none;
-  -moz-transition: none; 
-  -ms-transition: none;
-  -o-transition: none;
-  transition: none;
-}
+// --- Base Styles ---
 
-html {
-  overflow-x: hidden;
-  overflow-y: scroll;
-  width: 100%;
-}
-
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-hr,
-dl,
-dd,
-ol,
-ul,
-figure {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-// Basic styling
-body {
-  min-height: 100vh;
-  overflow-x: hidden;
-  position: relative;
-  color: $text-base-color;
-  background-color: $white;
-  font: $normal-weight #{$base-font-size}/#{$base-line-height} $sans-family;
-  -webkit-text-size-adjust: 100%;
+html {
+  font-size: $video-base-font-size;
+  line-height: $video-base-line-height;
   -webkit-font-smoothing: antialiased;
-  -webkit-font-feature-settings: "kern" 1;
-  -moz-font-feature-settings: "kern" 1;
-  -o-font-feature-settings: "kern" 1;
-  font-feature-settings: "kern" 1;
-  font-kerning: normal;
-  box-sizing: border-box;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
 }
 
-// Set `margin-bottom` to maintain vertical rhythm
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-ul,
-ol,
-dl,
-figure,
-%vertical-rhythm {
-  margin-top: $spacing-full - 20;
-  margin-bottom: $spacing-full - 20;
+body {
+  font-family: $video-font-sans;
+  color: $video-color-foreground;
+  background-color: $video-color-background;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-// strong | bold
-strong,
-b {
-  font-weight: $bold-weight;
-  color: $black;
+main {
+  flex-grow: 1;
 }
 
-// horizontal rule
-hr {
-  border-bottom: 0;
-  border-style: solid;
-  border-color: $light;
-}
-
-// kbd tag
-kbd {
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  border: 1px solid $light;
-  border-radius: 2px;
-  color: $black;
-  display: inline-block;
-  font-size: $small-font-size;
-  line-height: 1.4;
-  font-family: $mono-family;
-  margin: 0 0.1em;
-  font-weight: $bold-weight;
-  padding: 0.01em 0.4em;
-  text-shadow: 0 1px 0 $white;
-}
-
-// Image
-img {
+img,
+video,
+svg {
   max-width: 100%;
-  vertical-align: middle;
-  -webkit-user-drag: none;
-  margin: 0 auto;
-  text-align: center;
-}
-
-// Figure
-figure {
-  position: relative;
-}
-
-// Image inside Figure tag
-figure > img {
+  height: auto;
   display: block;
-  position: relative;
 }
 
-// Image caption
-figcaption {
-  font-size: 13px;
-  text-align: center;
-}
-
-// List
-ul {
-  list-style: none;
-  li {
-    display: list-item;
-    text-align: -webkit-match-parent;
-  }
-  li::before {
-    content: "\FE63";
-    display: inline-block;
-    top: -1px;
-    width: 1.2em;
-    position: relative;
-    margin-left: -1.3em;
-    font-weight: 700;
-  }
-}
-
-ol {
-  list-style: none;
-  counter-reset: li;
-  li {
-    position: relative;
-    counter-increment: li;
-    &::before {
-      content: counter(li);
-      display: inline-block;
-      width: 1em;
-      margin-right: 0.5em;
-      margin-left: -1.6em;
-      text-align: right;
-      direction: rtl;
-      font-weight: $bold-weight;
-      font-size: $small-font-size;
-    }
-  }
-}
-
-ul,
-ol {
-  margin-top: 0;
-  margin-left: $spacing-full;
-}
-
-li {
-  padding-bottom: 1px;
-  padding-top: 1px;
-
-  &:before {
-    color: $black;
-  }
-
-  > ul,
-  > ol {
-    margin-bottom: 2px;
-    margin-top: 0;
-  }
-}
-
-// Headings
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: $black;
-  font-weight: $bold-weight;
-  & + ul,
-  & + ol {
-    margin-top: 10px;
-  }
-
-  @include media-query($on-mobile) {
-    scroll-margin-top: 65px;
-  }
-}
-
-// Headings with link
-h1 > a,
-h2 > a,
-h3 > a,
-h4 > a,
-h5 > a,
-h6 > a {
-  text-decoration: none;
-  border: none;
-
-  &:hover {
-    text-decoration: none;
-    border: none;
-  }
-}
-
-// Link
 a {
-  color: inherit;
-  text-decoration-color: $smoke;
+  color: $video-color-link;
+  text-decoration: none;
+  transition: color $video-transition-duration $video-transition-timing;
 
   &:hover {
-    color: $text-link-blue;
+    color: $video-color-link-hover;
+    text-decoration: underline;
   }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: $video-spacing-4;
+  font-weight: $video-bold-font-weight;
+  line-height: 1.3;
+}
+
+h1 { font-size: 2.25rem; } // ~ text-4xl
+h2 { font-size: 1.5rem; } // ~ text-2xl
+h3 { font-size: 1.25rem; } // ~ text-xl
+h4 { font-size: 1.125rem; } // ~ text-lg
+
+p {
+  margin-bottom: $video-spacing-4;
+}
+
+ul, ol {
+  list-style: none; // Remove default list styles
+  // Add margin/padding if needed globally, or style specifically in components
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="search"],
+textarea {
+  display: block;
+  width: 100%;
+  padding: $video-spacing-2 $video-spacing-4; // ~ px-4 py-2 / py-3
+  border: $video-border-width $video-border-style $video-color-input-border;
+  border-radius: $video-border-radius-lg;
+  background-color: $video-color-input;
+  transition: border-color $video-transition-duration $video-transition-timing, box-shadow $video-transition-duration $video-transition-timing;
 
   &:focus {
-    outline: 3px solid rgba(0, 54, 199, 0.6);
-    outline-offset: 2px;
+    outline: none;
+    border-color: $video-color-primary;
+    box-shadow: 0 0 0 2px $video-color-ring; // ~ ring-2 ring-primary
+  }
+
+  &::placeholder {
+    color: $video-color-muted-foreground;
+    opacity: 1;
   }
 }
 
-// Del
-del {
-  color: inherit;
-}
-
-// Em
-em {
-  color: inherit;
-}
-
-// Blockquotes
-blockquote {
-  color: $gray;
-  font-style: italic;
+// Basic Button Styling (can be extended)
+.video-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $video-spacing-2;
+  padding: $video-spacing-3 $video-spacing-6; // ~ px-6 py-3
+  border-radius: $video-border-radius-lg;
+  font-weight: 500; // medium
+  cursor: pointer;
+  transition: background-color $video-transition-duration $video-transition-timing, color $video-transition-duration $video-transition-timing;
+  border: none;
   text-align: center;
-  opacity: 0.9;
-  border-top: 1px solid $light;
-  border-bottom: 1px solid $light;
-  padding: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
-  font-size: 1em;
+  white-space: nowrap;
 
-  > :last-child {
-    margin-bottom: 0;
-    margin-top: 0;
+  &--primary {
+    background-color: $video-color-primary;
+    color: $video-color-primary-foreground;
+    &:hover {
+      background-color: darken($video-color-primary, 8%); // ~ bg-primary/90 is tricky, darken is simpler
+      text-decoration: none;
+    }
   }
-}
 
-// Wrapper
-.wrapper {
-  max-width: -webkit-calc(#{$narrow-size} - (#{$spacing-full} * 2));
-  max-width: calc(#{$narrow-size} - (#{$spacing-full} * 2));
-  position: relative;
-  margin-right: auto;
-  margin-left: auto;
-  padding-right: $spacing-full;
-  padding-left: $spacing-full;
-  @extend %clearfix;
+  &--secondary {
+    background-color: $video-color-secondary;
+    color: $video-color-secondary-foreground;
+    &:hover {
+      background-color: darken($video-color-secondary, 5%);
+       text-decoration: none;
+    }
+  }
 
-  @include media-query($on-mobile) {
-    max-width: -webkit-calc(#{$narrow-size} - (#{$spacing-full}));
-    max-width: calc(#{$narrow-size} - (#{$spacing-full}));
-    padding-right: $spacing-full - 10;
-    padding-left: $spacing-full - 10;
-
-    &.blurry {
-      animation: 0.2s ease-in forwards blur;
-      -webkit-animation: 0.2s ease-in forwards blur;
+  // For icon buttons (like in header/footer)
+  &--icon {
+    padding: $video-spacing-2;
+    border-radius: $video-border-radius-full;
+    background-color: transparent;
+    color: $video-color-foreground; // Or muted foreground? Check design
+    &:hover {
+      background-color: $video-color-muted;
+       text-decoration: none;
     }
   }
 }
 
-// Underline
-u {
-  text-decoration-color: #d2c7c7;
+// Helper for SVGs used as icons
+.video-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em; // Default size, override as needed
+  height: 1em;
+  stroke-width: 2;
+  fill: none; // Default for line icons
+  stroke: currentColor;
+
+  &--sm { // w-3 h-3 -> ~0.75rem
+    width: 0.75em;
+    height: 0.75em;
+  }
+  &--md { // w-4 h-4 -> ~1rem
+    width: 1em;
+    height: 1em;
+  }
+  &--lg { // w-5 h-5 -> ~1.25rem
+    width: 1.25em;
+    height: 1.25em;
+  }
+   &--xl { // w-6 h-6 -> ~1.5rem
+    width: 1.5em;
+    height: 1.5em;
+  }
+   &--xxl { // w-8 h-8 -> ~2rem
+    width: 2em;
+    height: 2em;
+  }
+
+  &--primary {
+     color: $video-color-primary;
+  }
+  &--muted {
+      color: $video-color-muted-foreground;
+  }
+  &--fill {
+     fill: currentColor;
+     stroke: none; // Or set stroke color explicitly if needed
+  }
 }
 
-// Small
-small {
-  font-size: $small-font-size;
-}
-
-// Superscript
-sup {
-  border-radius: 10%;
-  top: -3px;
-  left: 2px;
-  font-size: small;
-  position: relative;
-  margin-right: 2px;
-}
-
-// Table
-.overflow-table {
-  overflow-x: auto;
-}
-
-table {
+// Container utility
+.video-container {
   width: 100%;
-  margin-top: $spacing-half;
-  border-collapse: collapse;
-  font-size: $small-font-size;
-
-  thead {
-    font-weight: $bold-weight;
-    color: $black;
-    border-bottom: 1px solid $light;
-  }
-
-  th,
-  td,
-  tr {
-    border: 1px solid $light;
-    padding: 2px 7px;
-  }
-}
-
-// Clearfix
-%clearfix:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-// When mouse block a text set this color
-mark,
-::selection {
-  background: #fffba0;
-  color: $black;
-}
-
-// Github Gist clear border
-.gist {
-  table {
-    border: 0;
-
-    tr,
-    td {
-      border: 0;
-    }
-  }
+  max-width: $video-breakpoint-xl; // Adjust max-width as needed
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $video-spacing-4;
+  padding-right: $video-spacing-4;
 }

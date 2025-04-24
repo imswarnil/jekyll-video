@@ -1,185 +1,217 @@
-// Code
-code {
-  font-family: $mono-family;
-  text-rendering: optimizeLegibility;
-  font-feature-settings: "calt" 1;
-  font-variant-ligatures: normal;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  word-wrap: normal;
-  font-size: inherit;
+// _scss/theme/_dark.scss
 
-  &.highlighter-rouge {
-    padding: 1px 3px;
-    position: relative;
-    top: -1px;
-    background-color: #f6f6f6;
-    border-radius: 2px;
-    border: 1px solid rgba(128,128,128,0.1);
+// Define dark mode color variables
+$video-dark-color-primary: $video-color-primary; // Keep primary same, or adjust (e.g., lighten)
+$video-dark-color-primary-foreground: $video-color-primary-foreground; // Usually stays white/light
+$video-dark-color-secondary: #374151; // Dark Gray
+$video-dark-color-secondary-foreground: #e5e7eb; // Light Gray / White-ish
+$video-dark-color-background: #111827; // Very Dark Gray / Near Black
+$video-dark-color-foreground: #f9fafb; // Very Light Gray / White-ish
+$video-dark-color-muted: #1f2937; // Dark Gray (lighter than background)
+$video-dark-color-muted-foreground: #9ca3af; // Medium Gray
+$video-dark-color-border: #374151; // Dark Gray Border
+$video-dark-color-input: #1f2937; // Dark Input Background
+$video-dark-color-input-border: #4b5563;
+$video-dark-color-ring: rgba($video-dark-color-primary, 0.6);
+$video-dark-color-link: $video-dark-color-primary; // Use primary, or maybe a lighter red/link color
+$video-dark-color-link-hover: lighten($video-dark-color-link, 10%);
+// No need to redefine black/white transparent unless needed specifically
+
+// Apply dark mode overrides using a class on body or data-attribute
+// Choose one method:
+// body.dark-mode { ... }
+// OR
+// [data-theme="dark"] { ... }
+
+body.dark-mode, // Using body class method
+[data-theme="dark"] { // Also supporting data attribute
+
+  // --- Base Overrides ---
+  background-color: $video-dark-color-background;
+  color: $video-dark-color-foreground;
+
+  a {
+    color: $video-dark-color-link;
+    &:hover {
+      color: $video-dark-color-link-hover;
+    }
   }
-}
 
-// Codeblock Theme
-pre.highlight, pre {
-  margin: 0 -27px;
-  @include media-query($on-mobile) {
-    margin: 0 calc(51% - 51vw);
-    padding-left: 20px;
+  input[type="text"],
+  input[type="email"],
+  input[type="search"],
+  textarea {
+    background-color: $video-dark-color-input;
+    border-color: $video-dark-color-input-border;
+    color: $video-dark-color-foreground; // Ensure text input color is light
+
+    &:focus {
+       border-color: $video-dark-color-primary; // Adjust if needed
+       box-shadow: 0 0 0 2px $video-dark-color-ring;
+    }
+     &::placeholder {
+       color: $video-dark-color-muted-foreground;
+     }
   }
-  border: 1px solid rgba(128,128,128,0.1);
-  background-color: #1a1b21;
-  border-radius: 2px;
-  padding: 10px;
-  display: block;
-  overflow-x: auto;
 
-  > code {
-    width: 100%;
-    max-width: 50rem;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.5;
-    display: block;
-    border: 0;
+  .video-button {
+      &--secondary {
+         background-color: $video-dark-color-secondary;
+         color: $video-dark-color-secondary-foreground;
+         &:hover {
+           background-color: lighten($video-dark-color-secondary, 5%);
+         }
+      }
+       &--icon {
+          color: $video-dark-color-foreground; // Adjust if needed
+          &:hover {
+             background-color: $video-dark-color-muted;
+          }
+       }
   }
-}
 
-.highlight table td {
-  padding: 5px;
-}
+  // --- Layout Overrides ---
+  .video-header {
+    background-color: $video-dark-color-background; // Ensure sticky header matches body
+    border-bottom-color: $video-dark-color-border;
 
-.highlight table pre {
-  margin: 0;
-}
+    &__logo { color: $video-dark-color-foreground; }
+    &__search button { color: $video-dark-color-muted-foreground; }
+  }
 
-.highlight,
-.highlight .w {
-  color: #fbf1c7;
-  // background-color: #1a1b21;
-}
+  .video-footer {
+    background-color: $video-dark-color-muted;
+    &__column p,
+    &__column li a {
+      color: $video-dark-color-muted-foreground;
+      &:hover { color: $video-dark-color-foreground; }
+    }
+    &__logo { color: $video-dark-color-foreground; }
+    &__social-links a {
+       background-color: $video-dark-color-secondary;
+       color: $video-dark-color-secondary-foreground;
+       &:hover {
+          background-color: $video-dark-color-primary; // Use dark primary if different
+          color: $video-dark-color-primary-foreground;
+       }
+    }
+  }
 
-.highlight .err {
-  color: #fb4934;
-  // background-color: #1a1b21;
-  font-weight: bold;
-}
+  // --- Video Component Overrides ---
+  .video-hero-section {
+     &__text p { color: $video-dark-color-muted-foreground; }
+     &__banner-wrapper { border-color: $video-dark-color-border; }
+     // Play button already uses primary/foreground, likely okay
+  }
 
-.highlight .c,
-.highlight .cd,
-.highlight .cm,
-.highlight .c1,
-.highlight .cs {
-  color: #928374;
-  font-style: italic;
-}
+  .video-section {
+     &__title { // Title icon already uses primary color
+     }
+      &__view-all-link { color: $video-dark-color-link; } // Uses link color
+  }
 
-.highlight .cp {
-  color: #8ec07c;
-}
+  .video-card {
+      &__inner {
+          border-color: $video-dark-color-border;
+          // Hover shadows might need slight adjustment if they look weird on dark bg
+      }
+      &__duration {
+         // Uses black/white, probably fine
+      }
+       &__trending-badge {
+          // Uses primary/foreground, probably fine
+       }
+      &__title {
+         // Hover color is primary, probably fine
+      }
+       &__meta { color: $video-dark-color-muted-foreground; }
+  }
 
-.highlight .nt {
-  color: #fb4934;
-}
+  .video-series-card {
+      border-color: $video-dark-color-border;
+      &__overlay { // Uses black/white, fine
+      }
+      &__description { color: $video-dark-color-muted-foreground; }
+       &__link { color: $video-dark-color-link; } // Uses link color
+  }
 
-.highlight .o,
-.highlight .ow {
-  color: #fbf1c7;
-}
+   .video-newsletter-section {
+       background-color: $video-dark-color-muted;
+       &__description { color: $video-dark-color-muted-foreground; }
+       // Button and Input already handled in base overrides
+   }
 
-.highlight .p,
-.highlight .pi {
-  color: #fbf1c7;
-}
+   // --- Video Detail Page Overrides ---
+   .video-page {
+      &__back-link { color: $video-dark-color-link; }
+   }
 
-.highlight .gi {
-  color: #b8bb26;
-  background-color: #282828;
-}
+   .video-player-placeholder {
+       // Uses black/white, fine
+   }
 
-.highlight .gd {
-  color: #fb4934;
-  background-color: #282828;
-}
+   .video-details {
+      &__meta { color: $video-dark-color-muted-foreground; }
+      &__tags a {
+         background-color: $video-dark-color-secondary;
+         color: $video-dark-color-secondary-foreground;
+         &:hover { background-color: lighten($video-dark-color-secondary, 5%); }
+      }
+      &__actions {
+         // Buttons already handled
+      }
+      &__description-wrapper {
+          border-color: $video-dark-color-border;
+          p { color: $video-dark-color-muted-foreground; }
+      }
+   }
 
-.highlight .gh {
-  color: #b8bb26;
-  font-weight: bold;
-}
+   .video-ad-placeholder {
+       background-color: $video-dark-color-muted;
+       border-color: darken($video-dark-color-muted-foreground, 20%); // Adjust dashed border
+       p { color: $video-dark-color-muted-foreground; }
+   }
 
-.highlight .k,
-.highlight .kn,
-.highlight .kp,
-.highlight .kr,
-.highlight .kv {
-  color: #fb4934;
-}
+   .video-comments {
+       border-top-color: $video-dark-color-border;
+       &__avatar-placeholder { background-color: $video-dark-color-muted; }
+       &__timestamp { color: $video-dark-color-muted-foreground; }
+       &__text { color: $video-dark-color-muted-foreground; }
+   }
 
-.highlight .kc {
-  color: #d3869b;
-}
+   .video-sidebar-widget {
+       border-color: $video-dark-color-border;
+   }
 
-.highlight .kt {
-  color: #fabd2f;
-}
+    .video-timestamps {
+       &__button {
+          color: $video-dark-color-foreground;
+          &:hover { background-color: $video-dark-color-muted; }
+          &--active {
+             background-color: rgba($video-dark-color-primary, 0.15); // Slightly more opaque maybe
+             color: $video-dark-color-primary; // Adjust if needed
+          }
+       }
+    }
 
-.highlight .kd {
-  color: #fe8019;
-}
+    .video-related-list {
+       &__item { color: inherit; } // Already uses inherit
+       &__video-title {
+          // Hover color is primary
+       }
+       &__meta { color: $video-dark-color-muted-foreground; }
+        &__duration { // Uses black/white, fine
+        }
+    }
 
-.highlight .s,
-.highlight .sb,
-.highlight .sc,
-.highlight .sd,
-.highlight .s2,
-.highlight .sh,
-.highlight .sx,
-.highlight .s1 {
-  color: #b8bb26;
-  font-style: italic;
-}
+    .video-products-list {
+        li a {
+           color: $video-dark-color-foreground;
+           &:hover { color: $video-dark-color-link; }
+        }
+    }
 
-.highlight .si {
-  color: #b8bb26;
-  font-style: italic;
-}
-
-.highlight .sr {
-  color: #b8bb26;
-  font-style: italic;
-}
-
-.highlight .se {
-  color: #fe8019;
-}
-
-.highlight .nn {
-  color: #8ec07c;
-}
-
-.highlight .nc {
-  color: #8ec07c;
-}
-
-.highlight .no {
-  color: #d3869b;
-}
-
-.highlight .na {
-  color: #b8bb26;
-}
-
-.highlight .m,
-.highlight .mf,
-.highlight .mh,
-.highlight .mi,
-.highlight .il,
-.highlight .mo,
-.highlight .mb,
-.highlight .mx {
-  color: #d3869b;
-}
-
-.highlight .ss {
-  color: #83a598;
+   // --- Syntax Highlighting Overrides ---
+   // Already handled within _syntax.scss using the same selector
+   // Add any further specific overrides here if needed
 }
