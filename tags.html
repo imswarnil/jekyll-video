@@ -1,27 +1,48 @@
 ---
+layout: default
 title: Tags
 permalink: /tags/
-layout: page
-excerpt: Sorted article by tags.
+excerpt: Browse videos sorted by tag.
+comments: false
 ---
 
-<div class="archive-tags">
-  <a class="tag-item" href="#">all</a>
-  {%- for tag in site.tags -%} 
-    {% capture name %}{{ tag | first }}{% endcapture %}
-    <a class="tag-item" href="#{{name}}">{{ name }}</a> 
-  {%- endfor -%}
-</div>
+<div class="video-container video-py-8">
 
-{%- for tag in site.tags -%}
-  {%- capture name -%}{{ tag | first }}{%- endcapture -%}
-  <h2 id="{{ name }}">{{ name | upcase }}</h2>
-  {%- for post in site.tags[name] -%}
-    <article class="post-item" id="results-container">
-      <span class="post-item-date">{{ post.date | date: "%b %d, %Y" }}</span>
-      <h3 class="post-item-title">
-        <a href="{{ post.url }}">{{ post.title | escape }}</a>
-      </h3> 
-    </article>
-  {%- endfor -%}
-{%- endfor -%}
+    <h1 class="video-page-title video-text-center">Browse by Tag</h1>
+
+    {% assign sorted_tags = site.tags | sort %}
+
+    {% if sorted_tags.size > 0 %}
+        <nav class="video-tag-filter-bar" aria-label="Filter by tag">
+            <a class="video-tag-filter-item" href="{{ '/archive/' | relative_url }}">All Videos</a>
+            {% for tag in sorted_tags %}
+                {% assign tag_name = tag | first %}
+                {% assign tag_slug = tag_name | slugify %}
+                <a class="video-tag-filter-item" href="#{{ tag_slug }}">{{ tag_name }}</a>
+            {% endfor %}
+        </nav>
+
+        {% for tag in sorted_tags %}
+            {% assign tag_name = tag | first %}
+            {% assign tag_posts = tag | last %}
+            {% assign tag_slug = tag_name | slugify %}
+
+            <section id="{{ tag_slug }}" aria-labelledby="{{ tag_slug }}-heading">
+                <h2 class="video-tag-group-heading" id="{{ tag_slug }}-heading">{{ tag_name | capitalize }}</h2>
+                <div class="video-video-grid video-tag-group-grid">
+                    {% for post in tag_posts %}
+                        {% if post.collection == 'posts' or post.collection == nil %}
+                            {% include video-card.html video=post %}
+                        {% endif %}
+                    {% else %}
+                        <p class="video-text-muted">No videos found for the '{{ tag_name }}' tag.</p>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endfor %}
+
+    {% else %}
+        <p class="video-text-center video-text-muted">No tags found.</p>
+    {% endif %}
+
+</div>
