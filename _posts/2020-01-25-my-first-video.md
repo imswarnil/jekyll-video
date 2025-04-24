@@ -1,5 +1,5 @@
 ---
-layout: video
+layout: post
 title: "Building a Modern Website with Next.js and Tailwind CSS"
 date: 2023-04-15 10:00:00 +0700
 tags: [Next.js, Tailwind CSS, Web Development, React, Tutorial]

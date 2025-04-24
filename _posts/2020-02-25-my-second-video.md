@@ -1,9 +1,5 @@
-
-**Example 2: YouTube Video with Custom Image/Thumbnail**
-
-```yaml
 ---
-layout: video
+layout: post
 title: "Understanding React Hooks: useState and useEffect Explained"
 date: 2023-05-01 14:30:00 +0700
 tags: [React, Hooks, JavaScript, Frontend]
