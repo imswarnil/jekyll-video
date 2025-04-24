@@ -529,3 +529,43 @@ p:last-child {
 .video-mx-auto { margin-left: auto; margin-right: auto; }
 .video-max-w-prose { max-width: 65ch; }
 .video-line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; }
+
+/* Additions for the specific footer items */
+.video-footer__bottom-row {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping on small screens */
+  justify-content: center; /* Center items */
+  align-items: center;
+  gap: var(--video-space-4); /* Gap between items */
+  padding-top: var(--video-space-6);
+  margin-top: var(--video-space-8);
+  border-top: 1px solid var(--video-border);
+  font-size: var(--video-text-sm);
+  color: var(--video-muted-foreground);
+}
+
+.video-footer__bottom-item {
+  color: var(--video-muted-foreground);
+  text-decoration: none;
+}
+.video-footer__bottom-item:hover {
+  color: var(--video-primary);
+  text-decoration: underline;
+}
+
+.video-footer__theme-attribution {
+  display: block; /* Make it its own block */
+  width: 100%; /* Take full width */
+  text-align: center;
+  font-size: var(--video-text-xs); /* Make it small */
+  color: var(--video-muted-foreground);
+  margin-top: var(--video-space-4); /* Space above attribution */
+  opacity: 0.8; /* Slightly less prominent */
+}
+.video-footer__theme-attribution a {
+  color: var(--video-muted-foreground); /* Match surrounding text */
+  text-decoration: underline; /* Underline links */
+}
+.video-footer__theme-attribution a:hover {
+  color: var(--video-primary);
+}
