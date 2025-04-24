@@ -4,7 +4,6 @@ title: "Building a Modern Website with Next.js and Tailwind CSS"
 date: 2023-04-15 10:00:00 +0700
 tags: [Next.js, Tailwind CSS, Web Development, React, Tutorial]
 description: "A comprehensive tutorial on building a modern, responsive website using Next.js and Tailwind CSS, covering setup to deployment."
-# Video Specific Fields
 video_type: youtube
 video_id: "_u-7rWKnD4Q" # Example YouTube ID
 duration: "28:15"
