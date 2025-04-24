@@ -1,13 +1,15 @@
 ---
-layout: compress
----
+layout: compress 
+--- 
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: " en " }}">
-{% include header.html %}
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
 
-<body data-theme="{{ site.mode }}" class="notransition">
-
+<head>
+  {% include header.html %} 
+</head>
+<body data-theme="{{ site.mode | default: 'light' }}" class="notransition"> {#- Added default 'light' -#}
   <script>
+    // Keep your theme switching script exactly as it was
     const body = document.body;
     const data = body.getAttribute("data-theme");
 
@@ -15,24 +17,28 @@ layout: compress
       if (state === "dark") {
         body.setAttribute("data-theme", "dark");
       } else if (state === "light") {
-        body.removeAttribute("data-theme");
+        // Setting light explicitly might be needed if your dark theme CSS is strong
+        body.setAttribute("data-theme", "light");
+        // Or simply remove if light is the default browser style
+        // body.removeAttribute("data-theme");
       } else {
+        // If no localStorage item, use the default from the body tag
         localStorage.setItem("theme", data);
+        // Apply initial based on body attribute if needed (redundant if CSS handles default)
+        // initTheme(data);
       }
     };
- 
+
     initTheme(localStorage.getItem("theme"));
-    
+
     setTimeout(() => body.classList.remove("notransition"), 75);
   </script>
 
-  {% include navbar.html %}
-  <div class="wrapper">
-    {% include author.html %}
-    <main aria-label="Content">
-      {{ content }}
-    </main>
-    {% include footer.html %}
-  </div>
+  {% include navbar.html %} 
+  <main class="video-main" aria-label="Content">
+    {{ content }}
+  </main>
+  {% include footer.html %}
+
 </body>
 </html>
