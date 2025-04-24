@@ -4,11 +4,10 @@
 <a href="{{ video_data.url | relative_url }}" class="video-video-card">
     <article class="video-video-card__inner">
         <div class="video-video-card__thumbnail">
-            {% comment %}<!-- Thumbnail Logic: Custom Image > YouTube Thumbnail > Placeholder -->{% endcomment %}
             {% if video_data.image %}
                 <img src="{{ video_data.image | relative_url }}" alt="{{ video_data.title | escape }}" class="video-video-card__image" loading="lazy">
             {% elsif video_data.video_type == 'youtube' and video_data.video_id %}
-                <img src="https://img.youtube.com/vi/{{ video_data.video_id }}/hqdefault.jpg" alt="{{ video_data.title | escape }}" class="video-video-card__image" loading="lazy">
+                <img src="https://img.youtube.com/vi/{{ video_data.video_id }}/maxresdefault.jpg" alt="{{ video_data.title | escape }}" class="video-video-card__image" loading="lazy">
             {% else %}
                 <img src="{{ '/assets/images/video-placeholder.jpg' | relative_url }}" alt="" class="video-video-card__image"> {# Empty alt for placeholder #}
             {% endif %}
